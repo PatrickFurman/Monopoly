@@ -78,8 +78,6 @@ roll = function() {
   return(num)
 }
 
-
-
 ##### Functions for managing player class
 
 # By default changes position of provided player by amount, if skip==TRUE
@@ -159,6 +157,31 @@ draw_community_chest = function(i) {
   switch (x, update_money(players[i], 100), update_money(players[i], -150), update_pos(players[i], 0, skip=TRUE),
           update_money(players[i], -50), update_money(players[i], 100))
 }
+
+community_chest_deck = shuffle_deck(c(1:16))
+
+# Function to take existing deck and randomly order all cards
+shuffle_deck = function(deck) {
+  # Goes through the deck card by card and swap each with a randomly selected card
+  for(card in c(1:length(deck))) {
+    index = ceiling(runif(1, 1, length(deck)))
+    temp = deck[card]
+    deck[card] = deck[index]
+    deck[index] = temp
+  }
+  return(deck)
+}
+
+# Return top n cards from deck (doesn't remove)
+draw = function(deck, n = 1) {
+  return(deck[(length(deck) - n + 1):length(deck)])
+}
+
+# Removes top n cards from deck and returns shortened deck
+remove_top = function(deck, n = 1) {
+  return(deck[1:(length(deck) - n)])
+}
+
 switch (x, update_money(players[i], 100), update_money(players[i], -150), update_pos(players[i], 0, skip=TRUE),
         update_money(players[i], -50), update_money(players[i], 100))
 
